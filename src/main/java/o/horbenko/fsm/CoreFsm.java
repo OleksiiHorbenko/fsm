@@ -7,7 +7,7 @@ package o.horbenko.fsm;
  * @param <T> - Trigger (Event)
  * @param <D> - Data type
  */
-public interface Fsm<S, T, D extends FsmStateHolder<S>> {
+public interface CoreFsm<S, T, D extends FsmStateHolder<S>> {
 
     /**
      * Transits state that holds <code>initialDataToProcess</code> to the next state by trigger <code>trigger</code>

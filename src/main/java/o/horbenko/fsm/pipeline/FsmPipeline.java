@@ -14,7 +14,7 @@ import java.util.Optional;
  * +-----------------------------------------------------------------------------------+
  * |                                                                                   |
  * |   +--state--+  (by trigger t1)  +--state--+   (by trigger t2)   +--state--+       |
- * |   |    A    |  -------------->  |    B    |   -------------->   |    C    |       |
+ * |   |    A    |  from--------to   |    B    |   from--------to    |    C    |       |
  * |   +---------+                   +---------+                     +---------+       |
  * |                                                                                   |
  * +-----------------------------------------------------------------------------------+
@@ -22,14 +22,12 @@ import java.util.Optional;
  * {@link FsmPipeline} would be like:
  * <code>
  * enum States {
- * A, B, C;
+ *  A, B, C;
  * }
- * <p>
  * enum Triggers {
- * T1, T2
+ *  T1, T2
  * }
- * <p>
- * new FsmPipeline<States, Triggers>()
+ * new FsmPipeline {@literal <}States, Triggers{@literal >}()
  * .addPipe(States.A, Triggers.T1)
  * .addPipe(States.B, Triggers.T2);
  * </code>

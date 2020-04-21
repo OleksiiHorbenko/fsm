@@ -10,10 +10,8 @@ import o.horbenko.fsm.pipeline.FsmPipeline;
  * @param <D> - Data type
  * @param <P> {@link FsmPipeline} ID
  */
-public interface FsmWithPipelines<S, T, D extends FsmStateHolder<S>, P> extends Fsm<S, T, D> {
+public interface FiniteStateMachine<S, T, D extends FsmStateHolder<S>> extends CoreFsm<S, T, D> {
 
-    D moveOnPipeline(T trigger, D initialDataToProcess, FsmPipeline<S, T> pipelineToMoveOn);
-
-    D moveOnPipeline(T trigger, D initialDataToProcess, P pipelineId);
+    D moveOnPipeline(D initialDataToProcess, FsmPipeline<S, T> pipelineToMoveOn);
 
 }
