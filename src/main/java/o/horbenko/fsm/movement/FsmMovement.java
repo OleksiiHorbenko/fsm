@@ -54,7 +54,7 @@ public class FsmMovement<S, T, D extends FsmStateHolder<S>> {
         return this;
     }
 
-    public Optional<T> getTriggerByException(Class<? extends Exception> exceptionType) {
+    public Optional<T> getTriggerByConcreteException(Class<? extends Exception> exceptionType) {
         return Optional.ofNullable(triggerByException.get(exceptionType));
     }
 

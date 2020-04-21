@@ -1,8 +1,8 @@
 package o.horbenko.fsm.impl;
 
 import lombok.NonNull;
-import o.horbenko.fsm.FsmStateHolder;
 import o.horbenko.fsm.FiniteStateMachine;
+import o.horbenko.fsm.FsmStateHolder;
 import o.horbenko.fsm.pipeline.FsmPipeline;
 import o.horbenko.fsm.state.FsmState;
 
@@ -45,7 +45,6 @@ public class AbstractFiniteStateMachine
                             @NonNull FsmPipeline<S, T> pipelineToMoveOn) {
 
         D result = initialDataToProcess;
-        T trigger;
 
         /*
          * Terminates in case, when pipeline does not contains trigger for next movement by current state
@@ -60,12 +59,6 @@ public class AbstractFiniteStateMachine
             else
                 result = move(movementTriggerOpt.get(), result);
         }
-
     }
 
-    @Override
-    public D move(@NonNull T trigger,
-                  @NonNull D stateHolder) {
-        return super.move(trigger, stateHolder);
-    }
 }

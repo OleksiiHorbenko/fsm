@@ -22,10 +22,10 @@ import java.util.Optional;
  * {@link FsmPipeline} would be like:
  * <code>
  * enum States {
- *  A, B, C;
+ * A, B, C;
  * }
  * enum Triggers {
- *  T1, T2
+ * T1, T2
  * }
  * new FsmPipeline {@literal <}States, Triggers{@literal >}()
  * .addPipe(States.A, Triggers.T1)
@@ -58,11 +58,10 @@ public class FsmPipeline<S, T> {
     }
 
     /**
-     * @throws PipelineConfigurationException if:
-     *                                        <ul>
-     *                                            <li>State to move from is <code>null</code></li>
-     *                                            <li>Trigger for next transition is <code>null</code></li>
-     *                                            <li>Transition from state already exists in pipeline</li>
+     * @throws PipelineConfigurationException <ul>
+     *                                        <li>State to move from is <code>null</code></li>
+     *                                        <li>Trigger for next transition is <code>null</code></li>
+     *                                        <li>Transition from state already exists in pipeline</li>
      *                                        </ul>
      */
     private void throwIfInvalid(S stateFrom, T triggerForNextMovement) {

@@ -2,10 +2,22 @@ package o.horbenko.fsm;
 
 /**
  * Basic Finite State Machine (FSM) implementation
+ * <p>
+ * Movement exception handling logic:
+ * <ul>
+ *     <li>
+ *         1. If exception was thrown in movement action or in movement post-action - handle exception
+ *         and try to move by exception trigger
+ *     </li>
+ *     <li>
+ *         2. If in exception handling movement was thrown exception
+ *         - tries to handle recursively until there is no trigger defined by new exception state.
+ *     </li>
+ * </ul>
  *
- * @param <S> - State
- * @param <T> - Trigger (Event)
- * @param <D> - Data type
+ * @param <S> State
+ * @param <T> Trigger (Event)
+ * @param <D> Data type
  */
 public interface CoreFsm<S, T, D extends FsmStateHolder<S>> {
 

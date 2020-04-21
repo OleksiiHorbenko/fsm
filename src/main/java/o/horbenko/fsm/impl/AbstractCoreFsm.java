@@ -2,12 +2,12 @@ package o.horbenko.fsm.impl;
 
 import lombok.NonNull;
 import o.horbenko.fsm.CoreFsm;
-import o.horbenko.fsm.error.InvalidFsmConfigurationException;
-import o.horbenko.fsm.movementaction.FsmMovementAction;
-import o.horbenko.fsm.state.FsmState;
 import o.horbenko.fsm.FsmStateHolder;
+import o.horbenko.fsm.error.InvalidFsmConfigurationException;
 import o.horbenko.fsm.error.NoMovementByTriggerInStateException;
 import o.horbenko.fsm.movement.FsmMovement;
+import o.horbenko.fsm.movementaction.FsmMovementAction;
+import o.horbenko.fsm.state.FsmState;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -55,7 +55,7 @@ public class AbstractCoreFsm
         // 3. Get movement by trigger
         FsmMovement<S, T, D> movement = stateConfiguration
                 .getMovementByTrigger(trigger)
-                .orElseThrow(() -> new NoMovementByTriggerInStateException("Unable to find movement from state =" + initialState.toString() + " by trigger = " + trigger.toString()));
+                .orElseThrow(() -> new NoMovementByTriggerInStateException("Unable to find movement from state = '" + initialState.toString() + "' by trigger = '" + trigger + "'"));
 
         // 4. Execute
         return moveWithExceptionHandling(movement, stateHolder);
@@ -71,7 +71,6 @@ public class AbstractCoreFsm
             return applyActionIfExists(movement.getPostMovementAction(), data);
 
         } catch (Exception e) {
-            System.out.println("Handled exception on movement from state = " + initialState);
             data.setState(initialState);
             return handleMovementException(movement, data, e);
         }
@@ -81,7 +80,8 @@ public class AbstractCoreFsm
                                       D data,
                                       Exception e) {
 
-        Optional<T> concreteExceptionTriggerOpt = movement.getTriggerByException(e.getClass());
+        Optional<T> concreteExceptionTriggerOpt = movement
+                .getTriggerByConcreteException(e.getClass());
 
         T nextMovementTrigger = concreteExceptionTriggerOpt
                 .orElseGet(movement::getTriggerOnGeneralException);
@@ -92,8 +92,7 @@ public class AbstractCoreFsm
     private D applyActionIfExists(Optional<FsmMovementAction<D>> actionOpt, D data) {
         if (actionOpt.isPresent()) {
             return actionOpt
-                    .get()
-                    .execute(data);
+                    .get().execute(data);
         } else {
             // do nothing
             return data;

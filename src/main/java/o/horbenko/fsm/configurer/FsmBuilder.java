@@ -15,7 +15,7 @@ public class FsmBuilder<S, T, D extends FsmStateHolder<S>> {
 
     public static <S, T, D extends FsmStateHolder<S>>
     FsmBuilder<S, T, D> builder() {
-        return new FsmBuilder<S, T, D>();
+        return new FsmBuilder<>();
     }
 
     public FsmBuilder() {
@@ -30,7 +30,7 @@ public class FsmBuilder<S, T, D extends FsmStateHolder<S>> {
         this.stateConfigurationMap.put(state, new FsmState<>(stateConfig));
     }
 
-    public AbstractFiniteStateMachine<S, T, D> build() {
+    public AbstractFiniteStateMachine<S, T, D> buildFsm() {
         return new AbstractFiniteStateMachine<>(stateConfigurationMap);
     }
 
@@ -56,9 +56,9 @@ public class FsmBuilder<S, T, D extends FsmStateHolder<S>> {
             return this.parentBuilder.andState(state);
         }
 
-        public AbstractFiniteStateMachine<S, T, D> build() {
+        public AbstractFiniteStateMachine<S, T, D> buildFsm() {
             this.parentBuilder.addState(this.state, this.possibleMovements);
-            return parentBuilder.build();
+            return parentBuilder.buildFsm();
         }
 
         protected void addMovement(T trigger, FsmMovement<S, T, D> movement) {
@@ -79,17 +79,17 @@ public class FsmBuilder<S, T, D extends FsmStateHolder<S>> {
         }
 
         public MovementBuilder<S, T, D> movementAction(FsmMovementAction<D> action) {
-            this.movement.setMovementAction(action);
+            this.movement.movementAction(action);
             return this;
         }
 
         public MovementBuilder<S, T, D> postMovementAction(FsmMovementAction<D> postMovementAction) {
-            this.movement.setPostMovementAction(postMovementAction);
+            this.movement.postMovementAction(postMovementAction);
             return this;
         }
 
         public MovementBuilder<S, T, D> targetStateOnSuccess(S targetState) {
-            this.movement.setFutureStateOnSuccess(targetState);
+            this.movement.targetState(targetState);
             return this;
         }
 
@@ -117,9 +117,9 @@ public class FsmBuilder<S, T, D extends FsmStateHolder<S>> {
         }
 
 
-        public AbstractFiniteStateMachine<S, T, D> build() {
+        public AbstractFiniteStateMachine<S, T, D> buildFsm() {
             this.parentBuilder.addMovement(this.trigger, this.movement);
-            return this.parentBuilder.build();
+            return this.parentBuilder.buildFsm();
         }
 
     }

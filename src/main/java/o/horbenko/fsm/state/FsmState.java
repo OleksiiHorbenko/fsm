@@ -27,6 +27,9 @@ public class FsmState<S, T, D extends FsmStateHolder<S>> {
     }
 
     public Optional<FsmMovement<S, T, D>> getMovementByTrigger(T trigger) {
+        if (trigger == null)
+            return Optional.empty();
+
         return Optional.ofNullable(possibleMovements.get(trigger));
     }
 
