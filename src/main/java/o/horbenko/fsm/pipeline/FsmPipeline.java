@@ -1,3 +1,26 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2020 Oleksii Horbenko
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ * */
 package o.horbenko.fsm.pipeline;
 
 import lombok.NonNull;
@@ -11,25 +34,19 @@ import java.util.Optional;
  * Finite State Machine (FSM) pipeline.
  * <p>
  * For pipeline:
- * +-----------------------------------------------------------------------------------+
- * |                                                                                   |
- * |   +--state--+  (by trigger t1)  +--state--+   (by trigger t2)   +--state--+       |
- * |   |    A    |  from--------to   |    B    |   from--------to    |    C    |       |
- * |   +---------+                   +---------+                     +---------+       |
- * |                                                                                   |
- * +-----------------------------------------------------------------------------------+
+ * <br> A --(by trigger t1)--> B --(by trigger t2)--> C
  * <p>
  * {@link FsmPipeline} would be like:
  * <code>
- * enum States {
- * A, B, C;
- * }
- * enum Triggers {
- * T1, T2
- * }
- * new FsmPipeline {@literal <}States, Triggers{@literal >}()
- * .addPipe(States.A, Triggers.T1)
- * .addPipe(States.B, Triggers.T2);
+ * <br>enum States {
+ * <br>&nbsp;A, B, C;
+ * <br>}
+ * <br>enum Triggers {
+ * <br>&nbsp;T1, T2
+ * <br>}
+ * <br>new FsmPipeline {@literal <}States, Triggers{@literal >}()
+ * <br>&nbsp;.addPipe(States.A, Triggers.T1)
+ * <br>&nbsp;.addPipe(States.B, Triggers.T2);
  * </code>
  *
  * @param <S> - State
@@ -51,6 +68,11 @@ public class FsmPipeline<S, T> {
         return Optional.ofNullable(triggerByStateMap.get(currentState));
     }
 
+    /**
+     * Adds new movement in pipeline. (Specifies new transition from <code>stateFrom</code> to new state by trigger <code>triggerForNextMovement</code>)
+     *
+     * @throws PipelineConfigurationException if one of input params is null or if transition from <code>stateFrom</code>  alrady exists.
+     */
     public FsmPipeline<S, T> addPipe(S stateFrom, T triggerForNextMovement) {
         throwIfInvalid(stateFrom, triggerForNextMovement);
         this.triggerByStateMap.put(stateFrom, triggerForNextMovement);

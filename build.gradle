@@ -17,6 +17,18 @@ java {
     withSourcesJar()
 }
 
+task sourceJar(type: Jar) {
+    classifier "sources"
+    from sourceSets.main.allJava
+}
+
+
+artifacts {
+    archives jar
+    archives sourceJar
+    archives javadocJar
+}
+
 
 dependencies {
 
@@ -30,6 +42,11 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
     testCompileOnly 'org.projectlombok:lombok:1.18.12'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    // Slf4j
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '2.0.0-alpha1'
+    testCompileOnly group: 'org.slf4j', name: 'slf4j-log4j12', version: '2.0.0-alpha1'
+
 }
 
 publishing {
@@ -79,7 +96,6 @@ publishing {
         }
     }
 }
-
 
 signing {
     sign publishing.publications.mavenJava

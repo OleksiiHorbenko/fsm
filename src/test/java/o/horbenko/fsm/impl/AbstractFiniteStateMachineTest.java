@@ -147,7 +147,6 @@ public class AbstractFiniteStateMachineTest {
 
         @Override
         public Data execute(Data data) {
-            System.out.println("action -> " + data.getState());
             return data;
         }
     }
