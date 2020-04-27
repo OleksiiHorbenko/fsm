@@ -33,6 +33,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * StateMachine transition configuration.
+ * <p>
+ * {@link FsmMovement#movementAction} - main action to be applied on state machine.
+ * State of domain is initial (initial state before transition)
+ * {@link FsmMovement#postMovementAction} - action after successful {@link #movementAction}.
+ * State of domain is {@link FsmMovement#futureStateOnSuccess}. Can be used for storing new state in DB.
+ *
+ * @param <S> state type
+ * @param <T> trigger (event) type
+ * @param <D> state holder or context
+ * @author Oleksii Horbenko
+ */
 @Data
 @Accessors(chain = true)
 public class FsmMovement<S, T, D extends FsmStateHolder<S>> {

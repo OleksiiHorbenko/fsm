@@ -26,14 +26,16 @@ package o.horbenko.fsm;
 /**
  * DTO that holds state. Could be target domain class (Order) or some inner context like
  * <code>
- *     <br> {@literal @}{@link lombok.Data}
- *     <br>class StateMachineContext implements {@link FsmStateHolder}{@literal <}{@link String}{@literal >} {
- *         <br>&nbsp;private {@link java.util.Map}{@literal <}{@link String}, {@link Object}{@literal >} params;
- *         <br>&nbsp;private {@link Object} payload;
- *         <br>&nbsp;private {@link String} currentState;
- *    <br>}
+ * <br> {@literal @}{@link lombok.Data}
+ * <br>class StateMachineContext implements {@link FsmStateHolder}{@literal <}{@link String}{@literal >} {
+ * <br>&nbsp;private {@link java.util.Map}{@literal <}{@link String}, {@link Object}{@literal >} params;
+ * <br>&nbsp;private {@link Object} payload;
+ * <br>&nbsp;private {@link String} currentState;
+ * <br>}
  *
  * </code>
+ *
+ * @author Oleksii Horbenko
  */
 public interface FsmStateHolder<S> {
 

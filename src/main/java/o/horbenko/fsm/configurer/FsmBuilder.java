@@ -33,7 +33,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Builder of {@link o.horbenko.fsm.FiniteStateMachine} instance with configuration of states, trigger and possible transitions.
+ * Builder of {@link o.horbenko.fsm.FiniteStateMachine} instance with configuration of states,
+ * triggers and possible transitions.
+ *
+ * @author Oleksii Horbenko
  */
 public class FsmBuilder<S, T, D extends FsmStateHolder<S>> {
 

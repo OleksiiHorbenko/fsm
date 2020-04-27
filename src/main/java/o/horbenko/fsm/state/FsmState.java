@@ -33,9 +33,11 @@ import java.util.Optional;
 
 /**
  * Configuration of possible movements from FSM state. Contains {@link Map} of {@link FsmMovement}s by triggers.
+ *
  * @param <S> State type
  * @param <T> Trigger type
  * @param <D> Data that holds state (implements {@link FsmStateHolder})
+ * @author Oleksii Horbenko
  */
 public class FsmState<S, T, D extends FsmStateHolder<S>> {
 

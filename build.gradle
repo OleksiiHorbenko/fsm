@@ -5,7 +5,6 @@ plugins {
 }
 
 group 'io.github.oleksiihorbenko'
-def artifactId = 'fsm'
 version '1.0'
 
 repositories {
@@ -17,42 +16,10 @@ java {
     withSourcesJar()
 }
 
-task sourceJar(type: Jar) {
-    classifier "sources"
-    from sourceSets.main.allJava
-}
-
-
-artifacts {
-    archives jar
-    archives sourceJar
-    archives javadocJar
-}
-
-
-dependencies {
-
-    // JUnit + Mockito
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile group: 'org.mockito', name: 'mockito-core', version: '3.3.3'
-
-
-    // Lombok
-    compileOnly 'org.projectlombok:lombok:1.18.12'
-    annotationProcessor 'org.projectlombok:lombok:1.18.12'
-    testCompileOnly 'org.projectlombok:lombok:1.18.12'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
-
-    // Slf4j
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '2.0.0-alpha1'
-    testCompileOnly group: 'org.slf4j', name: 'slf4j-log4j12', version: '2.0.0-alpha1'
-
-}
-
 publishing {
     publications {
         mavenJava(MavenPublication) {
-//            artifactId = this.artifactId
+            artifactId = 'fsm'
             from components.java
             versionMapping {
                 usage('java-api') {
@@ -63,13 +30,14 @@ publishing {
                 }
             }
             pom {
-                name = 'Finite State Machine library'
-                description = 'Simple implementation of flat Finite State Machine'
+                name = 'Flat FSM library'
+                description = 'Java implementation of flat FSM'
                 url = 'https://github.com/OleksiiHorbenko/fsm'
+
                 licenses {
                     license {
-                        name = 'The Apache License, Version 2.0'
-                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        name = 'MIT License'
+                        url = 'https://opensource.org/licenses/MIT'
                     }
                 }
                 developers {
@@ -80,19 +48,21 @@ publishing {
                     }
                 }
                 scm {
-                    connection = 'https://github.com/OleksiiHorbenko/fsm.git'
-                    developerConnection = 'https://github.com/OleksiiHorbenko/fsm.git'
+                    connection = 'scm:git:git://github.com/OleksiiHorbenko/fsm.git'
+                    developerConnection = 'scm:git:ssh://https://github.com/OleksiiHorbenko/fsm'
                     url = 'https://github.com/OleksiiHorbenko/fsm'
                 }
             }
         }
     }
     repositories {
+
         maven {
-            // change URLs to point to your repos, e.g. http://my.org/repo
-            def releasesRepoUrl = "$buildDir/repos/releases"
-            def snapshotsRepoUrl = "$buildDir/repos/snapshots"
-            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            url = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+            credentials {
+                username 'ohorbenko'
+                password 'Oleksii&19069524'
+            }
         }
     }
 }
@@ -107,3 +77,23 @@ javadoc {
         options.addBooleanOption('html5', true)
     }
 }
+
+dependencies {
+
+    // JUnit + Mockito
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '3.3.3'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    testCompileOnly 'org.projectlombok:lombok:1.18.12'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    // Slf4j
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '2.0.0-alpha1'
+    testCompileOnly group: 'org.slf4j', name: 'slf4j-log4j12', version: '2.0.0-alpha1'
+
+}
+
+

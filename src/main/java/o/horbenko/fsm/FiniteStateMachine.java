@@ -31,6 +31,7 @@ import o.horbenko.fsm.pipeline.FsmPipeline;
  * @param <S> - State
  * @param <T> - Trigger (Event)
  * @param <D> - Data type
+ * @author Oleksii Horbenko
  */
 public interface FiniteStateMachine<S, T, D extends FsmStateHolder<S>> extends CoreFsm<S, T, D> {
 

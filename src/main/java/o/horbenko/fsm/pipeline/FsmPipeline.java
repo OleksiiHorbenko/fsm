@@ -34,7 +34,7 @@ import java.util.Optional;
  * Finite State Machine (FSM) pipeline.
  * <p>
  * For pipeline:
- * <br> A --(by trigger t1)--> B --(by trigger t2)--> C
+ * <br> A --(by trigger t1)--{@literal >} B --(by trigger t2)--{@literal >} C
  * <p>
  * {@link FsmPipeline} would be like:
  * <code>
@@ -51,6 +51,7 @@ import java.util.Optional;
  *
  * @param <S> - State
  * @param <T> - Trigger (Event)
+ * @author Oleksii Horbenko
  */
 public class FsmPipeline<S, T> {
 
@@ -71,6 +72,9 @@ public class FsmPipeline<S, T> {
     /**
      * Adds new movement in pipeline. (Specifies new transition from <code>stateFrom</code> to new state by trigger <code>triggerForNextMovement</code>)
      *
+     * @param stateFrom              state to move from
+     * @param triggerForNextMovement trigger that specifies the next {@link o.horbenko.fsm.movement.FsmMovement} (contains target state)
+     * @return {@link FsmPipeline} as implementation of builder
      * @throws PipelineConfigurationException if one of input params is null or if transition from <code>stateFrom</code>  alrady exists.
      */
     public FsmPipeline<S, T> addPipe(S stateFrom, T triggerForNextMovement) {

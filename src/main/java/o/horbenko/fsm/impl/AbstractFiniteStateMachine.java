@@ -34,11 +34,13 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * @see o.horbenko.fsm.FiniteStateMachine interface for details.
  * Extends {@link AbstractCoreFsm} with basic {@link o.horbenko.fsm.CoreFsm#move(Object, FsmStateHolder)} functionality.
+ *
  * @param <S> State type
  * @param <T> Trigger (event) type
- * @param <D>
+ * @param <D> {@link FsmStateHolder} implementation
+ * @author Oleksii Horbenko
+ * @see o.horbenko.fsm.FiniteStateMachine interface for details.
  */
 @Slf4j
 public class AbstractFiniteStateMachine

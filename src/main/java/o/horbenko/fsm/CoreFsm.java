@@ -41,6 +41,7 @@ package o.horbenko.fsm;
  * @param <S> State
  * @param <T> Trigger (Event)
  * @param <D> Data type
+ * @author Oleksii Horbenko
  */
 public interface CoreFsm<S, T, D extends FsmStateHolder<S>> {
 

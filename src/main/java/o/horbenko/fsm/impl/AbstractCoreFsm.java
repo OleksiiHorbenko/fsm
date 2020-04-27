@@ -44,6 +44,7 @@ import java.util.Optional;
  * @param <S> - state type
  * @param <T> - trigger (event) type
  * @param <D> - object that owns state
+ * @author Oleksii Horbenko
  */
 @Slf4j
 public class AbstractCoreFsm
