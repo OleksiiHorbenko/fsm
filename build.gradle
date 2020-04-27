@@ -5,7 +5,10 @@ plugins {
 }
 
 group 'io.github.oleksiihorbenko'
-version '1.0'
+version '1.1'
+
+sourceCompatibility=11
+targetCompatibility=11
 
 repositories {
     mavenCentral()
@@ -91,8 +94,8 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
 
     // Slf4j
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '2.0.0-alpha1'
-    testCompileOnly group: 'org.slf4j', name: 'slf4j-log4j12', version: '2.0.0-alpha1'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+    testCompileOnly group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.30'
 
 }
 
