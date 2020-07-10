@@ -24,7 +24,6 @@
 package o.horbenko.fsm.impl;
 
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 import o.horbenko.fsm.FiniteStateMachine;
 import o.horbenko.fsm.FsmStateHolder;
 import o.horbenko.fsm.pipeline.FsmPipeline;
@@ -42,7 +41,6 @@ import java.util.Optional;
  * @author Oleksii Horbenko
  * @see o.horbenko.fsm.FiniteStateMachine interface for details.
  */
-@Slf4j
 public class AbstractFiniteStateMachine
         <S, T, D extends FsmStateHolder<S>>
         extends AbstractCoreFsm<S, T, D>
@@ -77,7 +75,6 @@ public class AbstractFiniteStateMachine
     @Override
     public D moveOnPipeline(@NonNull D initialDataToProcess,
                             @NonNull FsmPipeline<S, T> pipelineToMoveOn) {
-        log.debug("Trying to move from state {} on pipeline {}", initialDataToProcess, pipelineToMoveOn);
 
         D result = initialDataToProcess;
 
@@ -88,10 +85,8 @@ public class AbstractFiniteStateMachine
 
             Optional<T> movementTriggerOpt = pipelineToMoveOn
                     .getTriggerForNextMovementByState(result.getState());
-            log.debug("Found new movement trigger '{}' for movement on pipeline.", movementTriggerOpt);
 
             if (movementTriggerOpt.isEmpty()) { // exit point
-                log.debug("There is no next movement defined in pipeline. Result state is '{}'", result.getState());
                 return result;
             } else {
                 result = move(movementTriggerOpt.get(), result);

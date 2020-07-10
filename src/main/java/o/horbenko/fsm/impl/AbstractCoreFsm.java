@@ -24,7 +24,6 @@
 package o.horbenko.fsm.impl;
 
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 import o.horbenko.fsm.CoreFsm;
 import o.horbenko.fsm.FsmStateHolder;
 import o.horbenko.fsm.error.InvalidFsmConfigurationException;
@@ -46,7 +45,6 @@ import java.util.Optional;
  * @param <D> - object that owns state
  * @author Oleksii Horbenko
  */
-@Slf4j
 public class AbstractCoreFsm
         <S, T, D extends FsmStateHolder<S>>
         implements CoreFsm<S, T, D> {
@@ -74,20 +72,17 @@ public class AbstractCoreFsm
 
     @Override
     public D move(T trigger, D stateHolder) {
-        log.debug("Trying to move from state {} by trigger {}", stateHolder.getState(), trigger);
 
         // 1. Get current state
         S initialState = stateHolder.getState();
 
         // 2. Get FsmState configuration
         FsmState<S, T, D> stateConfiguration = stateConfigurationMap.get(initialState);
-        log.debug("Found state configuration by state={}", initialState);
 
         // 3. Get movement by trigger
         FsmMovement<S, T, D> movement = stateConfiguration
                 .getMovementByTrigger(trigger)
                 .orElseThrow(() -> new NoMovementByTriggerInStateException("Unable to find movement from state = '" + initialState.toString() + "' by trigger = '" + trigger + "'"));
-        log.debug("Found movement by trigger={} from state={}", trigger, initialState);
 
         // 4. Execute
         return moveWithExceptionHandling(movement, stateHolder);
@@ -97,15 +92,12 @@ public class AbstractCoreFsm
     private D moveWithExceptionHandling(FsmMovement<S, T, D> movement, D data) {
         S initialState = data.getState();
         try {
-            log.debug("Trying to execute movement action and postMovement action with exception handling.");
 
             data = applyActionIfExists(movement.getMovementAction(), data);
             data.setState(movement.getFutureStateOnSuccess());
-            log.debug("Main movement action completed successfully. Trying to execute postMovementAction with new state={}", data.getState());
             return applyActionIfExists(movement.getPostMovementAction(), data);
 
         } catch (Exception e) {
-            log.error("Handled error on movement action or post movement action. Trying to change state to initial ({}) and transit to error state.", initialState);
             data.setState(initialState);
             return handleMovementException(movement, data, e);
         }
@@ -120,18 +112,15 @@ public class AbstractCoreFsm
         T nextMovementTrigger = concreteExceptionTriggerOpt
                 .orElseGet(movement::getTriggerOnGeneralException);
 
-        log.debug("Trigger for next movement by handled movement exception is {}. Trying to move by this trigger.", nextMovementTrigger);
         return move(nextMovementTrigger, data);
     }
 
     private D applyActionIfExists(Optional<FsmMovementAction<D>> actionOpt, D data) {
         if (actionOpt.isPresent()) {
-            log.debug("Found action on movement from state={}", data.getState());
             return actionOpt
                     .get().execute(data);
         } else {
             // do nothing
-            log.debug("Movement action for state={} not found in configuration. Ignoring.", data.getState());
             return data;
         }
     }
